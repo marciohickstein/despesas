@@ -6,26 +6,28 @@
     <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/despesas.css">
     <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular-locale_pt-br.js"></script>
     <script src="js/despesas.js"></script>
     <script src="js/controllers/despesasCtrl.js"></script>
 </head>
 <body ng-controller="despesasCtrl">
 <div class="jumbotron">
     <h1 ng-bind="titulo"></h1>
+    <input class="form-control" type="text" ng-model="criterioBusca" placeholder="Qual despesa deseja pesquisar?"/>
     <table class="table table-striped">
         <tr>
             <th></th>
-            <th>Despesa</th>
-            <th>Valor</th>
+            <th><a href="" ng-click="ordenarPor('descricao')">Despesa</a></th>
+            <th><a href="" ng-click="ordenarPor('valor')">Valor</a></th>
             <th>Homem</th>
             <th>Mulher</th>
         </tr>
-        <tr ng-class="{selecionado: despesa.selecionada}" ng-repeat="despesa in despesas">
+        <tr ng-class="{selecionado: despesa.selecionada}" ng-repeat="despesa in despesas | filter:{ descricao: criterioBusca } | orderBy: criterioOrdenacao:criterioAscDesc">
             <td><input type="checkbox" ng-model="despesa.selecionada"/></td>
             <td>{{despesa.descricao}}</td>
-            <td>{{formataDinheiro(despesa.valor)}}</td>
-            <td>{{formataDinheiro(despesa.valorCol1)}}</td>
-            <td>{{formataDinheiro(despesa.valorCol2)}}</td>
+            <td>{{despesa.valor|currency}}</td>
+            <td>{{despesa.valorCol1|currency}}</td>
+            <td>{{despesa.valorCol2|currency}}</td>
         </tr>
     </table>
     </hr>
@@ -35,6 +37,8 @@
     <input class="form-control" type="number" ng-model="valor" placeholder="Valor"/>
     <button ng-click="adicionarDespesa(categoriaSelecionada.descricao, valor)" class="btn btn-primary btn-block" type="text" ng-disabled="!valor || !categoriaSelecionada">Adicionar</button>
     <button ng-click="removerDespesas()" class="btn btn-danger btn-block" type="text" ng-disabled="!isDespesaSelecionada()">Remover</button>
+{{'Marcio' | uppercase}}
+{{data | date: 'dd/MM/yyyy HH:mm:ss'}}
 </div>
 </body>
 </html>

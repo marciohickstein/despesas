@@ -1,12 +1,18 @@
 angular.module("despesas").controller("despesasCtrl", function($scope){
 
+    $scope.data = new Date();
+
     // Constantes
     $scope.titulo = "Despesas";
     $scope.percentualCol1 = 0.70;
     $scope.percentualCol2 = 0.30;
     
     // Dados do modelo
-    $scope.despesas = [];
+    $scope.despesas = [ 
+        { descricao: "Energia", valor: 10, valorCol1: 7, valorCol2: 3 },
+        { descricao: "Aluguel", valor: 100, valorCol1: 70, valorCol2: 30 },
+        { descricao: "Energia", valor: 1000, valorCol1: 700, valorCol2: 300 }
+    ];
     $scope.despesasSelecionadas = [];
     $scope.categorias = [ {codigo: 1, descricao: "Energia" }, {codigo: 2, descricao: "Alimentação" }, {codigo: 3, descricao: "Aluguel" }];
 
@@ -42,5 +48,11 @@ angular.module("despesas").controller("despesasCtrl", function($scope){
             return despesa.selecionada;
         });
         return isSelecionada;
+    };
+
+    // Ordenacao das colunas da tabela  
+    $scope.ordenarPor = function (campo){
+        $scope.criterioOrdenacao = campo;
+        $scope.criterioAscDesc = !$scope.criterioAscDesc;
     };
 });
