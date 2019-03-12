@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="despesas">
+<head>
+    <meta charset="latin1">
+    <title>Despesas</title>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="css/despesas.css">
+    <script src="lib/angular/angular.js"></script>
+    <script src="js/despesas.js"></script>
+    <script src="js/controllers/despesasCtrl.js"></script>
+</head>
+<body ng-controller="despesasCtrl">
+<div class="jumbotron">
+    <h1 ng-bind="titulo"></h1>
+    <table class="table table-striped">
+        <tr>
+            <th></th>
+            <th>Despesa</th>
+            <th>Valor</th>
+            <th>Homem</th>
+            <th>Mulher</th>
+        </tr>
+        <tr ng-class="{selecionado: despesa.selecionada}" ng-repeat="despesa in despesas">
+            <td><input type="checkbox" ng-model="despesa.selecionada"/></td>
+            <td>{{despesa.descricao}}</td>
+            <td>{{formataDinheiro(despesa.valor)}}</td>
+            <td>{{formataDinheiro(despesa.valorCol1)}}</td>
+            <td>{{formataDinheiro(despesa.valorCol2)}}</td>
+        </tr>
+    </table>
+    </hr>
+    <select class="form-control" ng-model="categoriaSelecionada" ng-options="categoria.descricao for categoria in categorias">
+        <option value="">Selecione uma categoria</option>
+    </select>
+    <input class="form-control" type="number" ng-model="valor" placeholder="Valor"/>
+    <button ng-click="adicionarDespesa(categoriaSelecionada.descricao, valor)" class="btn btn-primary btn-block" type="text" ng-disabled="!valor || !categoriaSelecionada">Adicionar</button>
+    <button ng-click="removerDespesas()" class="btn btn-danger btn-block" type="text" ng-disabled="!isDespesaSelecionada()">Remover</button>
+</div>
+</body>
+</html>
